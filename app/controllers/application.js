@@ -27,23 +27,25 @@ function ApplicationController(init) {
             }
             var cc = compound.structure.paths.controllers;
             var ccc = compound.structure.controllers;
-            console.log(cc);
-            Object.keys(cc).forEach(function(ctl) {
-                console.log(ctl);
-                var className = ccc[ctl].name;
-
-                if (!className) {
-                    return;
-                }
-                if (ctl === c.locals.fileName) {
-                    c.locals.className = className;
-                }
-                c.locals.controllers.push({
-                    path: compound.app.path(),
-                    name: ctl,
-                    className: className
+            // console.log(cc);
+            if (compound.root.indexOf(compound.app.get('docs whitelist')) >= 0) {
+                Object.keys(cc).forEach(function(ctl) {
+                    console.log(ctl);
+                    var className = ccc[ctl].name;
+    
+                    if (!className) {
+                        return;
+                    }
+                    if (ctl === c.locals.fileName) {
+                        c.locals.className = className;
+                    }
+                    c.locals.controllers.push({
+                        path: compound.app.path(),
+                        name: ctl,
+                        className: className
+                    });
                 });
-            });
+            }
             var cmd = compound.structure.paths.models;
             Object.keys(cmd).forEach(function(model) {
                 c.locals.models.push({
